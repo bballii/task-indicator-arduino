@@ -4,7 +4,7 @@
 #include <FastLED.h>
 
 #define DATA_PIN 14
-#define NUM_LEDS 19
+#define NUM_LEDS TOTAL_LEDS
 #define BRIGHTNESS 30
 #define NUM_COLORS 8
 
@@ -139,7 +139,7 @@ void callback(char *topic, byte *payload, unsigned int length)
   // when task is added to the list
   if (String(topic) == "task-update/add")
   {
-    if (ledIndex <= 19)
+    if (ledIndex <= NUM_LEDS)
     {
       addTask(ledIndex);
     }
@@ -148,7 +148,7 @@ void callback(char *topic, byte *payload, unsigned int length)
   // when task is marked done ̰
   if (String(topic) == "task-update/done")
   {
-    if (ledIndex <= 19)
+    if (ledIndex <= NUM_LEDS)
     {
       markAsDone(ledIndex);
     }
@@ -157,7 +157,7 @@ void callback(char *topic, byte *payload, unsigned int length)
   // when task is deleted from the list
   if (String(topic) == "task-update/delete")
   {
-    if (ledIndex <= 19)
+    if (ledIndex <= NUM_LEDS)
     {
       removeTask(ledIndex);
     }
