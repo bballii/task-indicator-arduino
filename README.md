@@ -1,5 +1,10 @@
 # Task Indicator - IoT Todo List (Arduino)
 
+## Overview
+At its core, the IoT To-Do List is a web-based task management application developed using Laravel. However, it goes beyond traditional to-do list applications by integrating with an ESP microcontroller, which is programmed to control a series of LEDs. Each LED corresponds to a task in the to-do list, providing a visual representation of the task's status.
+
+Whenever a task is added, completed, or deleted, the corresponding LED on the ESP device reacts in real time, either lighting up, changing color, or turning off entirely. This project exemplifies how IoT can enhance user interaction by making abstract concepts, such as task completion, more tangible and immediate.
+
 ## PlatformIO Configuration
 
 To ensure your project compiles correctly with PlatformIO, you need to update the `platformio.ini` file with the appropriate build flags. Additionally, you'll need to set the necessary environment variables on your system.
