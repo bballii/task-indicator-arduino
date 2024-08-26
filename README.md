@@ -71,3 +71,5 @@ Depending on your operating system, you can set environment variables as follows
 ### Final Steps
 
 Once you've updated the `platformio.ini` file and set the environment variables, you should be ready to compile and upload the code to your ESP device. Make sure to verify that all values are correct and correspond to your setup.
+
+**_NOTE: If I missed any steps or for installation please raise an issue, I will update the readme if needed._**
