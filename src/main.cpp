@@ -5,8 +5,8 @@
 
 #define DATA_PIN 14
 #define NUM_LEDS TOTAL_LEDS
-#define BRIGHTNESS 30
-#define NUM_COLORS 8
+#define BRIGHTNESS 255
+#define NUM_COLORS 17
 
 // WiFi credentials
 #define ssid WIFI_SSID
@@ -21,14 +21,23 @@ const int mqtt_port = atoi(MQTT_PORT);
 CRGB leds[NUM_LEDS];
 
 CRGB colors[NUM_COLORS] = {
-    CRGB::Red,
-    CRGB::Green,
-    CRGB::Blue,
-    CRGB::Yellow,
-    CRGB::Purple,
-    CRGB::Grey,
-    CRGB::Orange,
-    CRGB::DeepPink,
+    CRGB::Red, //0
+    CRGB::Green, //1
+    CRGB::Blue, //2
+    CRGB::Yellow, //3
+    CRGB::Purple, //4
+    CRGB::Grey, //5
+    CRGB::Orange, //6
+    CRGB::DeepPink, //7
+    CRGB::Cyan, //8
+    CRGB::Magenta, //9
+    CRGB::Lime, //10
+    CRGB::Aqua, //11
+    CRGB::Teal, //12
+    CRGB::Indigo, //13
+    CRGB::Violet, //14
+    CRGB::Gold, //15
+    CRGB(255, 191, 0) //16
 };
 
 WiFiClient espClient;
@@ -37,6 +46,8 @@ PubSubClient client(espClient);
 void connectToWiFi();
 void connectToMQTT();
 void callback(char *topic, byte *payload, unsigned int length);
+//turn on all leds
+void turnOnAll(int message);
 // To add task
 void addTask(int index);
 // To mark task as done
@@ -112,6 +123,7 @@ void connectToMQTT()
       client.subscribe("task-update/add");
       client.subscribe("task-update/delete");
       client.subscribe("task-update/done");
+      client.subscribe("task-update/turn-on-all");
     }
     else
     {
@@ -135,7 +147,15 @@ void callback(char *topic, byte *payload, unsigned int length)
   Serial.print(". Message: ");
   Serial.println(message);
 
+
+
   int ledIndex = message.toInt();
+  
+  if (String(topic) == "task-update/turn-on-all")
+  {
+      turnOnAll(ledIndex);
+  }
+
   // when task is added to the list
   if (String(topic) == "task-update/add")
   {
@@ -161,6 +181,18 @@ void callback(char *topic, byte *payload, unsigned int length)
     {
       removeTask(ledIndex);
     }
+  }
+}
+
+void turnOnAll(int index){
+  FastLED.clear(true);
+  for (size_t i = 0; i <= 19; i++)
+  {
+      leds[i] = colors[index];
+      Serial.print("COLOR INDEX: ");
+      Serial.println(index);
+      delay(50);
+      FastLED.show();
   }
 }
 
